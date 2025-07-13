@@ -1,0 +1,69 @@
+<style>
+	.carousel-caption h5 {
+		font-size: 2rem; /* Increase heading font size */
+		color: #ffffff; /* White color for text */
+		font-weight: bold; /* Optional: make it bold */
+		text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7); /* Stronger shadow for contrast */
+	}
+
+	.carousel-caption p {
+		font-size: 1.2rem; /* Increase paragraph font size */
+		color: #f8f9fa; /* Light gray color for text */
+		text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6); /* Stronger shadow for contrast */
+	}
+
+	/* Optional: Add a semi-transparent overlay for better visibility */
+	.carousel-item::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.4); /* Dark overlay with opacity */
+		z-index: 1; /* Place it behind text */
+	}
+
+	.carousel-caption {
+		z-index: 2; /* Ensure text is above the overlay */
+	}
+</style>
+
+<div id="carousel" class="carousel slide" data-bs-ride="carousel">
+	<div class="carousel-indicators">
+		<button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+		<button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+		<button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+	</div>
+	<div class="carousel-inner">
+		<div class="carousel-item active">
+			<img src="/assets/images/image1.png" class="d-block w-100" alt="...">
+			<div class="carousel-caption d-none d-md-block">
+				<h5>Welcome to Our Food Donation System</h5>
+				<p>Join us in helping the community and reducing food waste.</p>
+			</div>
+		</div>
+		<div class="carousel-item">
+			<img src="/assets/images/image2.png" class="d-block w-100" alt="...">
+			<div class="carousel-caption d-none d-md-block">
+				<h5>Donate Food Easily</h5>
+				<p>Simple, quick, and impactful. Make a difference today!</p>
+			</div>
+		</div>
+		<div class="carousel-item">
+			<img src="/assets/images/image4.jpg" class="d-block w-100" alt="...">
+			<div class="carousel-caption d-none d-md-block">
+				<h5>Agents at Your Service</h5>
+				<p>Our agents ensure food donations are collected promptly.</p>
+			</div>
+		</div>
+	</div>
+	<button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Previous</span>
+	</button>
+	<button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Next</span>
+	</button>
+</div>

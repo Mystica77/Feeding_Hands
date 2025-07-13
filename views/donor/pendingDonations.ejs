@@ -1,0 +1,101 @@
+<main>
+    <%- include('../partials/donorSidebar') %>
+    
+    <div id="main-wrapper">
+        
+        <div class="bg-white shadow-sm p-3">
+            <span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
+            <h5 class="m-0 color-theme d-inline-block">Pending Donations</h5>
+        </div>
+        
+        <div class="m-4">
+            <% pendingDonations.forEach((donation) => { %>
+                <div class="bg-white mb-4 p-4 shadow-sm">
+                    <div class="mb-2">
+                        <span>Food type:</span>
+                        <span><%= donation.foodType %></span>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <span>Quantity:</span>
+                        <span><%= donation.quantity %></span>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <span>Address given:</span>
+                        <span><%= donation.address %></span>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <span>Phone given:</span>
+                        <span><%= donation.phone %></span>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <span>Time of cooking:</span>
+                        <span><%= donation.cookingTime.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short"}) %></span>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <span>Status:</span>
+                        <% if(donation.status == "pending") { %>
+                            <span class="text-pending">Your donation request hasn't been processed yet.</span>
+                        <% } else if(donation.status == "rejected") { %>
+                            <span class="text-rejected">Your donation request has been rejected</span>
+                        <% } else if(donation.status == "accepted") { %>
+                            <span class="text-accepted">Your donation request has been accepted. Please wait while an agent is being assigned.</span>
+                        <% } else if (donation.status == "assigned" && donation.agent) { %>
+                            <span class="text-assigned">
+                                Your donation request has been accepted and the agent: 
+                                <%= donation.agent.firstName + " " + donation.agent.lastName %> 
+                                has been assigned for collecting food from your house in next one hour.
+                            </span>
+                        <% } else if (donation.status == "assigned") { %>
+                            <span class="text-warning">
+                                Your donation request has been accepted, but no agent has been assigned yet.
+                            </span>
+                        <% } %>
+                    </div>
+
+                    <% if(donation.status == "rejected") { %>
+                        <div class="mb-2">
+                            <a class="btn" href="/donor/donation/deleteRejected/<%= donation._id %>">Okay</a>
+                        </div>
+                    <% } %>
+
+                    <% if (donation.status == "assigned" && donation.deadline && !isNaN(new Date(donation.deadline).getTime())) { %>
+                        <div class="mb-2">
+                            <p>Deadline: <%= new Date(donation.deadline).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) %></p>
+                            <div id="timer-<%= donation._id %>"></div>
+                        </div>
+
+                        <script>
+                            const deadline = new Date('<%= donation.deadline %>');
+                            const timerElement = document.getElementById('timer-<%= donation._id %>');
+        
+                            function updateTimer() {
+                                const now = new Date();
+                                const timeRemaining = deadline - now;
+        
+                                if (timeRemaining <= 0) {
+                                    timerElement.innerHTML = '<span class="text-danger">Time Expired</span>';
+                                    clearInterval(timerInterval);
+                                } else {
+                                    const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+                                    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                                    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+                                    timerElement.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+                                }
+                            }
+        
+                            const timerInterval = setInterval(updateTimer, 1000);
+                            updateTimer(); // Initial call to set the timer immediately
+                        </script>
+                   
+                    <% } %>
+
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</main>

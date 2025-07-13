@@ -1,0 +1,37 @@
+<form action="/admin/donation/assign/<%= donation._id %>" method="POST" class="border m-4 my-3 p-4 bg-white rounded-2 shadow">
+    <div class="row">
+        <div class="mb-4 col-sm-4">
+            <label for="donor" class="form-label">Donor name</label>
+            <input type="text" class="form-control" id="donor" 
+                value="<%= donation.donor ? (donation.donor.firstName + ' ' + donation.donor.lastName) : 'Unknown Donor' %>" 
+                disabled>
+        </div>
+        
+        <div class="mb-4 col-sm-8">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" 
+                value="<%= donation.address || 'Address not provided' %>" 
+                disabled>
+        </div>
+    </div>
+    
+    <div class="mb-4">
+        <label for="agent" class="form-label">Select Agent</label>
+        <select name="agent" class="form-select" id="agent">
+            <% if (agents && agents.length > 0) { %>
+                <% agents.forEach(agent => { %>
+                    <option value="<%= agent._id %>"><%= agent.firstName + " " + agent.lastName %></option>
+                <% }) %>
+            <% } else { %>
+                <option value="" disabled>No agents available</option>
+            <% } %>
+        </select>
+    </div>
+    
+    <div class="mb-4">
+        <label for="msg" class="form-label">Message to Agent</label>
+        <textarea type="text" name="adminToAgentMsg" class="form-control" id="msg" placeholder="You can write here some msg.."></textarea>
+    </div>
+    
+    <button type="submit" class="btn w-75 d-block m-auto mt-4">Assign</button>
+</form>
